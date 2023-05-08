@@ -1,0 +1,37 @@
+[versions]
+kotlin = "1.8.0"
+androidx_compose = "1.4.0"
+agp = "7.4.1"
+
+[libraries]
+androidx_activity_ktx = "androidx.activity:activity-ktx:1.6.1"
+androidx_activity_compose = "androidx.activity:activity-compose:1.6.1"
+
+androidx_compose_bom = "androidx.compose:compose-bom:2022.10.00" # bom
+androidx_compose_constraintlayout = "androidx.constraintlayout:constraintlayout-compose:0.0.0"
+androidx_compose_material = "androidx.compose.material:material:0.0.0"
+androidx_compose_material_icons_extended = "androidx.compose.material:material-icons-extended:0.0.0"
+androidx_compose_ui = "androidx.compose.ui:ui:0.0.0"
+androidx_compose_ui_tooling = "androidx.compose.ui:ui-tooling:0.0.0"
+
+google_android_material = "com.google.android.material:material:1.7.0"
+
+kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+kotlinx_datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
+kotlinx_reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.0" # version kotlin
+kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+
+telegrambot = "io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:6.0.7"
+
+[plugins]
+kotlin_lang = { id = "org.jetbrains.kotlin.kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin_parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin_kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin_multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+
+kotlinx_serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+android_application = { id = "com.android.application", version.ref = "agp" }
+android_library = { id = "com.android.library", version.ref = "agp" }

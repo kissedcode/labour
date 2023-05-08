@@ -1,0 +1,39 @@
+############### ide ####################
+
+.idea/*
+!.idea/ktlint.xml
+
+#.idea/workspace.xml
+*.iml
+
+############### temp ###################
+
+## build files
+build
+
+## gradle
+.gradle
+
+############### local ##################
+
+## local configuration
+local.properties
+
+## local environment
+localenv.properties
+
+############### secrets ################
+
+## sign secret files
+# (hide real keystores, debug are ok)
+# sign
+
+############### os #####################
+
+## macos stuff
+*.DS_Store
+
+## windows stuff
+Thumbs.db
+
+
