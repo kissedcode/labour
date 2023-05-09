@@ -1,6 +1,6 @@
 [versions]
-kotlin = "1.8.0"
-androidx_compose = "1.4.0"
+kotlin = "1.8.21"
+androidx_compose = "1.4.7"
 agp = "7.4.1"
 
 [libraries]
