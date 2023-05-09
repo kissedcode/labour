@@ -60,7 +60,8 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.shared.kotlin.util)
+    
     "1.5.1".also { jetpackAppcompatVersion ->
         implementation("androidx.appcompat:appcompat:$jetpackAppcompatVersion")
         implementation("androidx.appcompat:appcompat-resources:$jetpackAppcompatVersion")

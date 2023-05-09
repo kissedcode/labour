@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 }
 
 include(":app:appAndroid")
+include(":shared:kotlin:util")
