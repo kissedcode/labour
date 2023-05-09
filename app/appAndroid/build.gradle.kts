@@ -39,9 +39,11 @@ android {
         debug {
             applicationIdSuffix  = ".debug"
             manifestPlaceholders["buildType"] = "debug"
+            manifestPlaceholders["iconSuffix"] = "_debug"
         }
         release {
             manifestPlaceholders["buildType"] = "release"
+            manifestPlaceholders["iconSuffix"] = ""
             signingConfig = signingConfigs["dev_release"]
             isMinifyEnabled = true
             proguardFiles += getDefaultProguardFile("proguard-android-optimize.txt")
