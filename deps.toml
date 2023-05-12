@@ -1,5 +1,6 @@
 [versions]
 kotlin = "1.8.21"
+kotlinx_coroutines = "1.6.4"
 androidx_compose = "1.4.7"
 agp = "7.4.1"
 
@@ -16,7 +17,8 @@ androidx_compose_ui_tooling = "androidx.compose.ui:ui-tooling:0.0.0"
 
 google_android_material = "com.google.android.material:material:1.7.0"
 
-kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+kotlinx_coroutines_core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", name = "kotlinx-coroutines-core", version.ref = "kotlinx_coroutines"}
+kotlinx_coroutines_rx2 = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-rx2", version.ref = "kotlinx_coroutines"}
 kotlinx_datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 kotlinx_reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.0" # version kotlin
 kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"

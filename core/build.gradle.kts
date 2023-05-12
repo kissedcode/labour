@@ -19,7 +19,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(platform(deps.androidx.compose.bom.get().toString()))
-//                implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+//                implementation(platform("androidx.compose:compose-bom:2022.10.00")) // doesn't work for some reason
                 implementation(deps.androidx.compose.ui.tooling)
                 implementation(deps.androidx.compose.material)
                 implementation(deps.androidx.compose.material.icons.extended)

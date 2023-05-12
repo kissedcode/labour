@@ -61,6 +61,7 @@ android {
 
 dependencies {
     implementation(projects.core)
+    implementation(projects.shared.android.util)
     implementation(projects.shared.kotlin.util)
     
     "1.5.1".also { jetpackAppcompatVersion ->
