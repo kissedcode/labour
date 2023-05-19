@@ -31,4 +31,9 @@ android {
 
 dependencies {
     implementation(projects.shared.kotlin.util)
+
+    implementation(platform(deps.androidx.compose.bom))
+    implementation(deps.androidx.compose.ui.tooling)
+    implementation(deps.androidx.compose.material)
+    implementation(deps.androidx.compose.material.icons.extended)
 }

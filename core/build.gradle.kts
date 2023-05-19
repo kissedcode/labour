@@ -28,6 +28,10 @@ kotlin {
     }
 }
 
+dependencies {
+    implementation(projects.shared.android.util)
+}
+
 android {
     namespace = "dev.kissed.labour"
     compileSdk = 33
