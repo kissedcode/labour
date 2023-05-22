@@ -1,6 +1,8 @@
 package dev.kissed.labour
 
-import kotlin.time.Duration.Companion.seconds
+import dev.kissed.labour.features.timer.TimerState
+import dev.kissed.labour.features.timer.isCounting
+import kotlin.time.Duration.Companion.milliseconds
 
 class AppReducer {
 
@@ -8,10 +10,17 @@ class AppReducer {
         return when (action) {
             AppAction.TimerStartStop -> {
                 val wasCounting = timerState.isCounting
+                
+                // fixme kissed: not clean!!!
+                val newCounting = if (wasCounting) null else TimerState.Counting(startMs = System.currentTimeMillis())
+                val newTime = timerState.counting?.let {
+                    val durationMs = System.currentTimeMillis() - it.startMs
+                    durationMs.milliseconds
+                } ?: 0.milliseconds
                 copy(
                     timerState = timerState.copy(
-                        isCounting = !timerState.isCounting,
-                        time = if (wasCounting) 10.seconds else 0.seconds,
+                        counting = newCounting,
+                        time = newTime,
                     ),
                 )
             }

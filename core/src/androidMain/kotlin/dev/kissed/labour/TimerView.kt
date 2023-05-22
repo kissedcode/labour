@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.kissed.labour.features.timer.TimerState
+import dev.kissed.labour.features.timer.isCounting
 
 data class TimerViewState(
     val isCountButtonStartStop: Boolean,
