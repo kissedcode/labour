@@ -6,12 +6,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import dev.kissed.labour.features.timer.TimerState
 
 data class TimerViewState(
+    val isCountButtonStartStop: Boolean,
     val duration: String,
 ) {
     companion object {
         fun viewStateMapper(state: TimerState): TimerViewState = TimerViewState(
+            isCountButtonStartStop = !state.isCounting,
             duration = state.time.toString(),
         )
     }

@@ -12,16 +12,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.kissed.android.util.context.showToast
+import dev.kissed.labour.AppAction.TimerStartStop
 
 data class AppViewState(
-    val isCountButtonStartStop: Boolean,
     val timerState: TimerViewState,
 ) {
     companion object {
 
         fun fromAppState(appState: AppState): AppViewState = AppViewState(
-            isCountButtonStartStop = !appState.isCounting,
             timerState = TimerViewState.viewStateMapper(appState.timerState),
         )
     }
@@ -29,6 +27,8 @@ data class AppViewState(
 
 @Composable
 fun AppView(state: AppViewState) {
+    val dispatch = LocalDispatcher.current
+
     MaterialTheme {
         Column(
             Modifier
@@ -45,13 +45,13 @@ fun AppView(state: AppViewState) {
 
             val context = LocalContext.current
             Text(
-                if (state.isCountButtonStartStop) "START" else "STOP",
+                if (state.timerState.isCountButtonStartStop) "START" else "STOP",
                 Modifier
                     .requiredHeight(100.dp)
                     .fillMaxWidth()
                     .background(Color.Blue)
-                    .clickable { context.showToast("click") },
-                color = if (state.isCountButtonStartStop) Color.Green else Color.Red,
+                    .clickable { dispatch(TimerStartStop) },
+                color = if (state.timerState.isCountButtonStartStop) Color.Green else Color.Red,
                 textAlign = TextAlign.Center,
                 fontSize = 30.sp,
             )
