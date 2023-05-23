@@ -1,4 +1,4 @@
-package dev.kissed.labour
+package dev.kissed.labour.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.kissed.labour.AppAction.TimerStartStop
+import dev.kissed.labour.AppState
+import dev.kissed.labour.LocalDispatcher
 
 data class AppViewState(
     val timerState: TimerViewState,
@@ -41,7 +43,7 @@ fun AppView(state: AppViewState) {
                     .weight(1f)
                     .fillMaxWidth(),
             ) {
-                TimerView(state = state.timerState)
+                ContractionsView(state = state.timerState)
             }
 
             Box(

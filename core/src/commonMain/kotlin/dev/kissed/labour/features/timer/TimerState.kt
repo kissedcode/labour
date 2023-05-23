@@ -1,11 +1,10 @@
 package dev.kissed.labour.features.timer
 
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
+import dev.kissed.labour.common.models.Contraction
 
 data class TimerState(
     val counting: Counting?,
-    val time: Duration,
+    val contractions: List<Contraction>,
 ) {
     data class Counting(
         val startMs: Long,
@@ -14,7 +13,7 @@ data class TimerState(
     companion object {
         val INITIAL = TimerState(
             counting = null,
-            time = 0.seconds,
+            contractions = emptyList(),
         )
     }
 }

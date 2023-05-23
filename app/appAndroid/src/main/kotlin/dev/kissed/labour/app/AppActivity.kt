@@ -7,8 +7,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import dev.kissed.labour.AppStore
-import dev.kissed.labour.AppView
-import dev.kissed.labour.AppViewState
+import dev.kissed.labour.view.AppView
+import dev.kissed.labour.view.AppViewState
 import dev.kissed.labour.LocalDispatcher
 
 private val appStore = AppStore()
