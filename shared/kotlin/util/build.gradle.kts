@@ -1,6 +1,7 @@
 plugins {
     alias(deps.plugins.kotlin.multiplatform)
     alias(deps.plugins.android.library)
+    alias(deps.plugins.kotlinx.serialization)
 }
 
 kotlin {

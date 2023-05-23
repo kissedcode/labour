@@ -5,9 +5,9 @@ import dev.kissed.kotlin.util.redux.Dispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class AppStore : Dispatcher<AppAction> {
+class AppStore(initialState: AppState) : Dispatcher<AppAction> {
 
-    private val _state = MutableStateFlow(AppState.INITIAL)
+    private val _state = MutableStateFlow(initialState)
     val state: StateFlow<AppState>
         get() = _state
     

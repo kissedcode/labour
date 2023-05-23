@@ -1,6 +1,7 @@
 plugins {
     alias(deps.plugins.android.application)
     alias(deps.plugins.kotlin.android)
+    alias(deps.plugins.kotlinx.serialization)
 }
 
 android {
@@ -78,4 +79,6 @@ dependencies {
     implementation(deps.androidx.compose.ui.tooling)
     implementation(deps.androidx.compose.material)
     implementation(deps.androidx.compose.material.icons.extended)
+    
+    implementation(deps.kotlinx.serialization.json)
 }

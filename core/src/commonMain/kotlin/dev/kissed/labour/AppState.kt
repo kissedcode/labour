@@ -1,7 +1,9 @@
 package dev.kissed.labour
 
 import dev.kissed.labour.features.timer.TimerState
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class AppState(
     val timerState: TimerState,
 ) {

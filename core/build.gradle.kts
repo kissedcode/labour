@@ -1,6 +1,7 @@
 plugins {
     alias(deps.plugins.kotlin.multiplatform)
     alias(deps.plugins.android.library)
+    alias(deps.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -9,8 +10,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.shared.kotlin.util)
-
                 implementation(deps.kotlinx.coroutines.core)
                 implementation(deps.kotlinx.serialization.json)
                 implementation(deps.kotlinx.reflect)
@@ -19,7 +18,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(platform(deps.androidx.compose.bom.get().toString()))
-//                implementation(platform("androidx.compose:compose-bom:2022.10.00")) // doesn't work for some reason
                 implementation(deps.androidx.compose.ui.tooling)
                 implementation(deps.androidx.compose.material)
                 implementation(deps.androidx.compose.material.icons.extended)
@@ -30,6 +28,7 @@ kotlin {
 
 dependencies {
     implementation(projects.shared.android.util)
+    implementation(projects.shared.kotlin.util)
 }
 
 android {
