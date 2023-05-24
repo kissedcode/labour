@@ -9,7 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import dev.kissed.labour.AppState
 import dev.kissed.labour.AppStore
-import dev.kissed.labour.LocalDispatcher
+import dev.kissed.labour.view.LocalDispatcher
 import dev.kissed.labour.view.AppView
 import dev.kissed.labour.view.AppViewState
 import kotlinx.serialization.decodeFromString
