@@ -1,5 +1,11 @@
 package dev.kissed.labour.view.timer
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,9 +20,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,6 +36,7 @@ import dev.kissed.labour.view.LocalDispatcher
 import kotlin.time.Duration.Companion.milliseconds
 
 data class TimerViewState(
+    val isCountingWarning: Boolean,
     val isCountButtonStartStop: Boolean,
     val items: List<TimerItemViewState>,
 ) {
@@ -74,6 +83,7 @@ data class TimerViewState(
             }
 
             return TimerViewState(
+                isCountingWarning = state.isCounting,
                 isCountButtonStartStop = !state.isCounting,
                 items = items,
             )
@@ -93,7 +103,10 @@ fun TimerView(state: TimerViewState) {
                 .weight(1f)
                 .fillMaxWidth(),
         ) {
-            ContractionsView(state = state)
+            if (state.isCountingWarning) {
+                WarningAnimationBox()
+            }
+            ContractionsList(state = state)
         }
 
         Box(
@@ -101,13 +114,13 @@ fun TimerView(state: TimerViewState) {
                 .requiredHeight(100.dp)
                 .fillMaxWidth(),
         ) {
-            TimerButtonView(state = state)
+            TimerButton(state = state)
         }
     }
 }
 
 @Composable
-fun BoxScope.ContractionsView(state: TimerViewState) {
+fun BoxScope.ContractionsList(state: TimerViewState) {
     if (state.items.isEmpty()) {
         Text(
             "No contractions yet",
@@ -148,7 +161,29 @@ fun BoxScope.ContractionsView(state: TimerViewState) {
 }
 
 @Composable
-fun BoxScope.TimerButtonView(state: TimerViewState) {
+private fun BoxScope.WarningAnimationBox() {
+    val infiniteTransition = rememberInfiniteTransition()
+    val alphaValue by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 800, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse,
+        ),
+    )
+
+    Box(
+        Modifier
+            .fillMaxSize()
+            .graphicsLayer {
+                alpha = alphaValue
+            }
+            .background(Color.Red),
+    )
+}
+
+@Composable
+private fun BoxScope.TimerButton(state: TimerViewState) {
     val dispatch = LocalDispatcher.current
 
     Box(
