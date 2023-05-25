@@ -4,22 +4,24 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import dev.kissed.labour.core.AppState
 import dev.kissed.labour.view.timer.TimerView
-import dev.kissed.labour.view.timer.TimerViewState
+import dev.kissed.labour.view.timer.TimerView.State
 
-data class AppViewState(
-    val timerState: TimerViewState,
-) {
-    companion object {
+object AppView {
 
-        fun fromAppState(appState: AppState): AppViewState = AppViewState(
-            timerState = TimerViewState.viewStateMapper(appState.timerState),
-        )
+    data class State(
+        val timerState: TimerView.State,
+    ) {
+        companion object {
+            fun fromAppState(appState: AppState): State = State(
+                timerState = TimerView.State.viewStateMapper(appState.timerState),
+            )
+        }
     }
-}
 
-@Composable
-fun AppView(state: AppViewState) {
-    MaterialTheme {
-        TimerView(state = state.timerState)
+    @Composable
+    operator fun invoke(state: State) {
+        MaterialTheme {
+            TimerView(state = state.timerState)
+        }
     }
 }

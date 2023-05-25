@@ -4,14 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import dev.kissed.labour.core.AppState
 import dev.kissed.labour.core.AppStore
-import dev.kissed.labour.view.LocalDispatcher
+import dev.kissed.labour.view.AppDispatcher
 import dev.kissed.labour.view.AppView
-import dev.kissed.labour.view.AppViewState
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -27,8 +25,8 @@ class AppActivity : AppCompatActivity() {
         setContent {
             val state by store.state.collectAsState()
 
-            CompositionLocalProvider(LocalDispatcher provides store) {
-                AppView(AppViewState.fromAppState(state))
+            AppDispatcher(dispatcher = store) {
+                AppView(AppView.State.fromAppState(state))
             }
         }
     }

@@ -32,95 +32,98 @@ import androidx.compose.ui.unit.sp
 import dev.kissed.labour.core.AppAction
 import dev.kissed.labour.features.timer.TimerState
 import dev.kissed.labour.features.timer.isCounting
-import dev.kissed.labour.view.LocalDispatcher
+import dev.kissed.labour.view.AppDispatcher
 import kotlin.time.Duration.Companion.milliseconds
 
-data class TimerViewState(
-    val isCountingWarning: Boolean,
-    val isCountButtonStartStop: Boolean,
-    val items: List<TimerItemViewState>,
-) {
-    sealed class TimerItemViewState() {
+object TimerView {
 
-        abstract val durationText: String
-
-        data class ContractionViewState(
-            val number: Int,
-            override val durationText: String,
-        ) : TimerItemViewState()
-
-        data class PauseViewState(
-            override val durationText: String,
-        ) : TimerItemViewState()
-    }
-
-    companion object {
-        fun viewStateMapper(state: TimerState): TimerViewState {
-            val items = mutableListOf<TimerItemViewState>()
-            state.contractions.firstOrNull()?.let {
-                items.add(
-                    TimerItemViewState.ContractionViewState(
-                        number = 0,
-                        durationText = (it.stopMs - it.startMs)
-                            .milliseconds.toString(),
-                    ),
-                )
-            }
-            state.contractions.windowed(2).forEachIndexed { idx, (prev, next) ->
-                items.add(
-                    TimerItemViewState.PauseViewState(
-                        durationText = (next.startMs - prev.stopMs)
-                            .milliseconds.toString(),
-                    ),
-                )
-                items.add(
-                    TimerItemViewState.ContractionViewState(
-                        number = idx + 1,
-                        durationText = (next.stopMs - next.startMs)
-                            .milliseconds.toString(),
-                    ),
-                )
-            }
-
-            return TimerViewState(
-                isCountingWarning = state.isCounting,
-                isCountButtonStartStop = !state.isCounting,
-                items = items,
-            )
-        }
-    }
-}
-
-@Composable
-fun TimerView(state: TimerViewState) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(Color.White),
+    data class State(
+        val isCountingWarning: Boolean,
+        val isCountButtonStartStop: Boolean,
+        val items: List<TimerItemViewState>,
     ) {
-        Box(
-            Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-        ) {
-            if (state.isCountingWarning) {
-                WarningAnimationBox()
-            }
-            ContractionsList(state = state)
+        sealed class TimerItemViewState() {
+
+            abstract val durationText: String
+
+            data class ContractionViewState(
+                val number: Int,
+                override val durationText: String,
+            ) : TimerItemViewState()
+
+            data class PauseViewState(
+                override val durationText: String,
+            ) : TimerItemViewState()
         }
 
-        Box(
+        companion object {
+            fun viewStateMapper(state: TimerState): State {
+                val items = mutableListOf<TimerItemViewState>()
+                state.contractions.firstOrNull()?.let {
+                    items.add(
+                        TimerItemViewState.ContractionViewState(
+                            number = 0,
+                            durationText = (it.stopMs - it.startMs)
+                                .milliseconds.toString(),
+                        ),
+                    )
+                }
+                state.contractions.windowed(2).forEachIndexed { idx, (prev, next) ->
+                    items.add(
+                        TimerItemViewState.PauseViewState(
+                            durationText = (next.startMs - prev.stopMs)
+                                .milliseconds.toString(),
+                        ),
+                    )
+                    items.add(
+                        TimerItemViewState.ContractionViewState(
+                            number = idx + 1,
+                            durationText = (next.stopMs - next.startMs)
+                                .milliseconds.toString(),
+                        ),
+                    )
+                }
+
+                return State(
+                    isCountingWarning = state.isCounting,
+                    isCountButtonStartStop = !state.isCounting,
+                    items = items,
+                )
+            }
+        }
+    }
+
+    @Composable
+    operator fun invoke(state: State) {
+        Column(
             Modifier
-                .requiredHeight(100.dp)
-                .fillMaxWidth(),
+                .fillMaxSize()
+                .background(Color.White),
         ) {
-            TimerButton(state = state)
+            Box(
+                Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+            ) {
+                if (state.isCountingWarning) {
+                    WarningAnimationBox()
+                }
+                ContractionsList(state = state)
+            }
+
+            Box(
+                Modifier
+                    .requiredHeight(100.dp)
+                    .fillMaxWidth(),
+            ) {
+                TimerButton(state = state)
+            }
         }
     }
 }
 
 @Composable
-fun BoxScope.ContractionsList(state: TimerViewState) {
+private fun BoxScope.ContractionsList(state: TimerView.State) {
     if (state.items.isEmpty()) {
         Text(
             "No contractions yet",
@@ -133,7 +136,7 @@ fun BoxScope.ContractionsList(state: TimerViewState) {
         ) {
             items(state.items) { item ->
                 when (item) {
-                    is TimerViewState.TimerItemViewState.ContractionViewState -> {
+                    is TimerView.State.TimerItemViewState.ContractionViewState -> {
                         Text(
                             "[${item.number}] contraction, duration: ${item.durationText}",
                             Modifier
@@ -145,7 +148,7 @@ fun BoxScope.ContractionsList(state: TimerViewState) {
                         )
                     }
 
-                    is TimerViewState.TimerItemViewState.PauseViewState -> {
+                    is TimerView.State.TimerItemViewState.PauseViewState -> {
                         Text(
                             "pause: ${item.durationText}",
                             Modifier
@@ -183,8 +186,8 @@ private fun BoxScope.WarningAnimationBox() {
 }
 
 @Composable
-private fun BoxScope.TimerButton(state: TimerViewState) {
-    val dispatch = LocalDispatcher.current
+private fun BoxScope.TimerButton(state: TimerView.State) {
+    val dispatch = AppDispatcher.dispatch
 
     Box(
         Modifier
