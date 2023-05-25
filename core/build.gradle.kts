@@ -32,7 +32,7 @@ dependencies {
 }
 
 android {
-    namespace = "dev.kissed.labour"
+    namespace = "dev.kissed.labour.core"
     compileSdk = 33
     defaultConfig {
         minSdk = 21

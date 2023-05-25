@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import dev.kissed.labour.AppState
-import dev.kissed.labour.AppStore
+import dev.kissed.labour.core.AppState
+import dev.kissed.labour.core.AppStore
 import dev.kissed.labour.view.LocalDispatcher
 import dev.kissed.labour.view.AppView
 import dev.kissed.labour.view.AppViewState

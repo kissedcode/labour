@@ -1,4 +1,4 @@
-package dev.kissed.labour
+package dev.kissed.labour.core
 
 import dev.kissed.labour.common.models.Contraction
 import dev.kissed.labour.features.timer.TimerState

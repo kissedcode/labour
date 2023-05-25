@@ -2,7 +2,7 @@ package dev.kissed.labour.view
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import dev.kissed.labour.AppState
+import dev.kissed.labour.core.AppState
 import dev.kissed.labour.view.timer.TimerView
 import dev.kissed.labour.view.timer.TimerViewState
 

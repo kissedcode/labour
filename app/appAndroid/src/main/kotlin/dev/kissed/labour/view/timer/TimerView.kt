@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.kissed.labour.AppAction
+import dev.kissed.labour.core.AppAction
 import dev.kissed.labour.features.timer.TimerState
 import dev.kissed.labour.features.timer.isCounting
 import dev.kissed.labour.view.LocalDispatcher

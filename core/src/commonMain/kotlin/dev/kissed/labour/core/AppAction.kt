@@ -1,4 +1,4 @@
-package dev.kissed.labour
+package dev.kissed.labour.core
 
 import dev.kissed.kotlin.util.redux.Action
 
