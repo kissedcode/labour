@@ -6,9 +6,9 @@ import dev.kissed.labour.features.timer.isCounting
 
 class AppReducer {
 
-    fun AppState.reduce(action: AppAction): AppState {
-        return when (action) {
-            AppAction.TimerStartStop -> {
+    fun AppState.reduce(event: AppEvent): AppState {
+        return when (event) {
+            AppEvent.TimerStartStop -> {
                 val wasCounting = timerState.isCounting
 
                 // fixme kissed: not clean!!!

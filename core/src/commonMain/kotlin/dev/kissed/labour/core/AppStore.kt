@@ -5,7 +5,7 @@ import dev.kissed.kotlin.util.redux.Dispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class AppStore(initialState: AppState) : Dispatcher<AppAction> {
+class AppStore(initialState: AppState) : Dispatcher<AppEvent> {
 
     private val _state = MutableStateFlow(initialState)
     val state: StateFlow<AppState>
@@ -14,11 +14,11 @@ class AppStore(initialState: AppState) : Dispatcher<AppAction> {
     private val reducer: AppReducer = AppReducer()
 
     // Dispatcher
-    override fun invoke(action: AppAction) {
-        dlog("dispatch: $action")
+    override fun invoke(event: AppEvent) {
+        dlog("dispatch: $event")
 
         val newState = with(reducer) {
-            state.value.reduce(action)
+            state.value.reduce(event)
         }
         _state.value = newState
     }

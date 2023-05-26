@@ -1,3 +1,3 @@
 package dev.kissed.kotlin.util.redux
 
-interface Action
+interface Event

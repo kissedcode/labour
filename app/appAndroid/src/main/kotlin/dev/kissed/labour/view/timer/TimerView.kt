@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.kissed.labour.core.AppAction
+import dev.kissed.labour.core.AppEvent
 import dev.kissed.labour.features.timer.TimerState
 import dev.kissed.labour.features.timer.isCounting
 import dev.kissed.labour.view.AppDispatcher
@@ -193,7 +193,7 @@ private fun BoxScope.TimerButton(state: TimerView.State) {
         Modifier
             .fillMaxSize()
             .background(if (state.isCountButtonStartStop) Color.Green else Color.Red)
-            .clickable { dispatch(AppAction.TimerStartStop) },
+            .clickable { dispatch(AppEvent.TimerStartStop) },
     ) {
         Text(
             if (state.isCountButtonStartStop) "START" else "STOP",
