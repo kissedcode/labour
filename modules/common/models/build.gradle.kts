@@ -27,13 +27,12 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.modules.common.models)
     implementation(projects.shared.android.util)
     implementation(projects.shared.kotlin.util)
 }
 
 android {
-    namespace = "dev.kissed.labour.core"
+    namespace = "dev.kissed.labour.common.models"
     compileSdk = 33
     defaultConfig {
         minSdk = 21

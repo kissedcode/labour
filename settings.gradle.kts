@@ -25,5 +25,8 @@ dependencyResolutionManagement {
 
 include(":app:appAndroid")
 include(":core")
+
+include(":modules:common:models")
+
 include(":shared:android:util")
 include(":shared:kotlin:util")

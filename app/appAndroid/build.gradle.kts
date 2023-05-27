@@ -62,6 +62,7 @@ android {
 
 dependencies {
     implementation(projects.core)
+    implementation(projects.modules.common.models)
     implementation(projects.shared.android.util)
     implementation(projects.shared.kotlin.util)
     
