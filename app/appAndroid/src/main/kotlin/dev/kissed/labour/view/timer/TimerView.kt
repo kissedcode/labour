@@ -1,6 +1,5 @@
 package dev.kissed.labour.view.timer
 
-import android.os.Build
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -32,16 +31,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.kissed.kotlin.util.time.format
 import dev.kissed.labour.core.AppEvent
 import dev.kissed.labour.features.timer.TimerState
 import dev.kissed.labour.features.timer.isCounting
 import dev.kissed.labour.view.AppDispatcher
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
-import java.time.format.DateTimeFormatter
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
@@ -69,6 +66,9 @@ object TimerView {
         }
 
         companion object {
+
+            private const val DATETIME_FORMAT = "d MMM, HH:mm"
+
             fun viewStateMapper(state: TimerState): State {
                 val items = mutableListOf<TimerItemViewState>()
                 state.contractions.firstOrNull()?.let {
@@ -77,7 +77,7 @@ object TimerView {
                             number = 0.toString(),
                             dateTime = Instant.fromEpochMilliseconds(it.startMs)
                                 .toLocalDateTime(TimeZone.currentSystemDefault())
-                                .formattedString(),
+                                .format(DATETIME_FORMAT),
                             durationText = (it.stopMs - it.startMs)
                                 .milliseconds.toString(DurationUnit.SECONDS),
                         ),
@@ -97,7 +97,7 @@ object TimerView {
                             number = (idx + 1).toString(),
                             dateTime = Instant.fromEpochMilliseconds(next.startMs)
                                 .toLocalDateTime(TimeZone.currentSystemDefault())
-                                .formattedString(),
+                                .format(DATETIME_FORMAT),
                             durationText = (next.stopMs - next.startMs)
                                 .div(1000)
                                 .seconds
@@ -234,14 +234,5 @@ private fun BoxScope.TimerButton(state: TimerView.State) {
             fontSize = 30.sp,
             fontWeight = FontWeight.ExtraBold,
         )
-    }
-}
-
-private fun LocalDateTime.formattedString(): String {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        toJavaLocalDateTime()
-            .format(DateTimeFormatter.ofPattern("d MMM, HH:mm"))
-    } else {
-        toString()
     }
 }

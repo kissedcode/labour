@@ -10,12 +10,16 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(deps.kotlinx.coroutines.core)
-                api(deps.kotlinx.serialization.json)
-                api(deps.kotlinx.reflect)
+                implementation(deps.kotlinx.coroutines.core)
+                implementation(deps.kotlinx.datetime)
+                implementation(deps.kotlinx.serialization.json)
+                implementation(deps.kotlinx.reflect)
             }
         }
         val androidMain by getting {
+            dependencies {
+                compileOnly(deps.androidx.annotation.annotation)
+            }
         }
     }
 }
