@@ -1,5 +1,6 @@
 package dev.kissed.labour.view.timer
 
+import android.os.Build
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -25,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,7 +36,15 @@ import dev.kissed.labour.core.AppEvent
 import dev.kissed.labour.features.timer.TimerState
 import dev.kissed.labour.features.timer.isCounting
 import dev.kissed.labour.view.AppDispatcher
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toJavaLocalDateTime
+import kotlinx.datetime.toLocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.DurationUnit
 
 object TimerView {
 
@@ -47,7 +58,8 @@ object TimerView {
             abstract val durationText: String
 
             data class ContractionViewState(
-                val number: Int,
+                val number: String,
+                val dateTime: String,
                 override val durationText: String,
             ) : TimerItemViewState()
 
@@ -62,9 +74,12 @@ object TimerView {
                 state.contractions.firstOrNull()?.let {
                     items.add(
                         TimerItemViewState.ContractionViewState(
-                            number = 0,
+                            number = 0.toString(),
+                            dateTime = Instant.fromEpochMilliseconds(it.startMs)
+                                .toLocalDateTime(TimeZone.currentSystemDefault())
+                                .formattedString(),
                             durationText = (it.stopMs - it.startMs)
-                                .milliseconds.toString(),
+                                .milliseconds.toString(DurationUnit.SECONDS),
                         ),
                     )
                 }
@@ -72,14 +87,21 @@ object TimerView {
                     items.add(
                         TimerItemViewState.PauseViewState(
                             durationText = (next.startMs - prev.stopMs)
-                                .milliseconds.toString(),
+                                .div(1000)
+                                .seconds
+                                .toString(),
                         ),
                     )
                     items.add(
                         TimerItemViewState.ContractionViewState(
-                            number = idx + 1,
+                            number = (idx + 1).toString(),
+                            dateTime = Instant.fromEpochMilliseconds(next.startMs)
+                                .toLocalDateTime(TimeZone.currentSystemDefault())
+                                .formattedString(),
                             durationText = (next.stopMs - next.startMs)
-                                .milliseconds.toString(),
+                                .div(1000)
+                                .seconds
+                                .toString(),
                         ),
                     )
                 }
@@ -138,7 +160,15 @@ private fun BoxScope.ContractionsList(state: TimerView.State) {
                 when (item) {
                     is TimerView.State.TimerItemViewState.ContractionViewState -> {
                         Text(
-                            "[${item.number}] contraction, duration: ${item.durationText}",
+                            buildAnnotatedString {
+                                append("[${item.number}], ${item.dateTime}: ")
+                                append(
+                                    buildAnnotatedString {
+                                        append(item.durationText)
+                                        addStyle(SpanStyle(Color.Red), 0, length)
+                                    },
+                                )
+                            },
                             Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)
@@ -150,7 +180,7 @@ private fun BoxScope.ContractionsList(state: TimerView.State) {
 
                     is TimerView.State.TimerItemViewState.PauseViewState -> {
                         Text(
-                            "pause: ${item.durationText}",
+                            item.durationText,
                             Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)
@@ -204,5 +234,14 @@ private fun BoxScope.TimerButton(state: TimerView.State) {
             fontSize = 30.sp,
             fontWeight = FontWeight.ExtraBold,
         )
+    }
+}
+
+private fun LocalDateTime.formattedString(): String {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        toJavaLocalDateTime()
+            .format(DateTimeFormatter.ofPattern("d MMM, HH:mm"))
+    } else {
+        toString()
     }
 }
