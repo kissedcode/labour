@@ -13,8 +13,8 @@ android {
 
         applicationId = "dev.kissed.labour"
 
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.3.0"
 
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_1_8
@@ -81,5 +81,6 @@ dependencies {
     implementation(deps.androidx.compose.material)
     implementation(deps.androidx.compose.material.icons.extended)
     
+    implementation(deps.kotlinx.datetime)
     implementation(deps.kotlinx.serialization.json)
 }
