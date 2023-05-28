@@ -27,6 +27,9 @@ include(":app:appAndroid")
 include(":core")
 
 include(":modules:common:models")
+include(":modules:features:debug:core")
+include(":modules:features:debug:ui_android")
+include(":modules:features:debug:sample_android")
 
 include(":shared:android:util")
 include(":shared:kotlin:util")

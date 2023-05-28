@@ -26,7 +26,7 @@ class AppActivity : AppCompatActivity() {
             val state by store.state.collectAsState()
 
             AppDispatcher(dispatcher = store) {
-                AppView(AppView.State.fromAppState(state))
+                AppView(state, AppView.State.fromAppState(state))
             }
         }
     }
