@@ -1,10 +1,10 @@
 package dev.kissed.kotlin.util.redux
 
-fun interface Dispatcher<in E : Event> {
+fun interface Dispatcher<E : ReduxEvent> {
 
     operator fun invoke(event: E)
 
     companion object {
-        val DUMMY = Dispatcher<Event> { }
+        val DUMMY = Dispatcher<ReduxEvent> { }
     }
 }

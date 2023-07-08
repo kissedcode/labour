@@ -32,6 +32,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.shared.kotlin.util)
+    implementation(projects.shared.android.util)
+    
     implementation(projects.modules.features.debug.core)
     implementation(projects.modules.features.debug.uiAndroid)
 

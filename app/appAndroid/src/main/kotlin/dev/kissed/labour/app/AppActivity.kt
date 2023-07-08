@@ -6,10 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import dev.kissed.kotlin.util.redux.Dispatcher
+import dev.kissed.labour.core.AppEventManager
 import dev.kissed.labour.core.AppState
 import dev.kissed.labour.core.AppStore
-import dev.kissed.labour.view.AppDispatcher
 import dev.kissed.labour.view.AppView
+import kotlinx.coroutines.GlobalScope
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -25,9 +27,11 @@ class AppActivity : AppCompatActivity() {
         setContent {
             val state by store.state.collectAsState()
 
-            AppDispatcher(dispatcher = store) {
-                AppView(state, AppView.State.fromAppState(state))
-            }
+            AppView(
+                state,
+                AppView.State.fromAppState(state),
+                dispatcher = store,
+            )
         }
     }
 
@@ -49,7 +53,11 @@ class AppActivity : AppCompatActivity() {
                     .getString("state", null)
                     ?.let { Json { }.decodeFromString(it) }
 
-                store = AppStore(savedState ?: AppState.INITIAL)
+                store = AppStore(
+                    initialState = savedState ?: AppState.INITIAL,
+                    eventManager = { event, state -> AppEventManager.manage(event, state) },
+                    scope = GlobalScope,
+                )
             }
             return store
         }

@@ -12,7 +12,9 @@ data class AppState(
     companion object {
         val INITIAL: AppState = AppState(
             timer = TimerState.INITIAL,
-            debug = DebugFeature.State.initial(),
+            debug = DebugFeature.State(
+                isEnabled = true,
+            ),
         )
     }
 }

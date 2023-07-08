@@ -6,9 +6,10 @@ import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import dev.kissed.kotlin.util.logging.elog
 import dev.kissed.kotlin.util.redux.Dispatcher
+import dev.kissed.kotlin.util.redux.ReduxEvent
 import dev.kissed.labour.core.AppEvent
 
-object AppDispatcher {
+object AppDispatcher { // fixme kissed: remove?
 
     private val local: ProvidableCompositionLocal<Dispatcher<AppEvent>> = staticCompositionLocalOf {
         Dispatcher {

@@ -19,6 +19,11 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 compileOnly(deps.androidx.annotation.annotation)
+
+                implementation(platform(deps.androidx.compose.bom.get().toString()))
+                implementation(deps.androidx.compose.ui.tooling)
+                implementation(deps.androidx.compose.material)
+                implementation(deps.androidx.compose.material.icons.extended)
             }
         }
     }
@@ -30,5 +35,12 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 33
+    }
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = deps.versions.androidx.compose.get()
     }
 }
