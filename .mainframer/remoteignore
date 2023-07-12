@@ -1,0 +1,9 @@
+src
+*.gradle
+*.kts
+
+# Comment out lines below if you need to run tests locally after mainframer build
++ intermediates/apk_ide_redirect_file/
+intermediates/*
+kotlin
+tmp

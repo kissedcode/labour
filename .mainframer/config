@@ -1,0 +1,3 @@
+remote_machine=kissed-mainframer
+local_compression_level=1
+remote_compression_level=4
